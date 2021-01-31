@@ -10,10 +10,10 @@ namespace Favohit.WebApi.Repository.Interface
 
         Task<T> GetById(Guid id);
 
-        Task<T> Save(T obj);
+        Task Save(T obj);
 
-        Task<T> Remove(T obj);
+        Task Remove(T obj);
 
-        Task<T> Update(T obj);
+        Task Update(T obj);
     }
 }
