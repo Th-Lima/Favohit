@@ -14,7 +14,7 @@ namespace Favohit.WebApi.Models
         public string Description { get; set; }
         
         public string Backdrop { get; set; }
-        
+
         public string Band { get; set; }
         
         public IList<Music> Musics { get; set; }
