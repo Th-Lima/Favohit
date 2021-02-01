@@ -30,7 +30,7 @@ namespace Favohit.WebApi
 
             services.AddScoped(typeof(BaseRepository<>));
             services.AddScoped<UserRepository>();
-            services.AddScoped<AlbumRespository>();
+            services.AddScoped<AlbumRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -2,8 +2,6 @@
 using Favohit.WebApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Favohit.WebApi.Controllers
@@ -12,9 +10,9 @@ namespace Favohit.WebApi.Controllers
     [ApiController]
     public class AlbumController : Controller
     {
-        private AlbumRespository _repository { get; set; }
+        private AlbumRepository _repository { get; set; }
 
-        public AlbumController(AlbumRespository respository)
+        public AlbumController(AlbumRepository respository)
         {
             _repository = respository;
         }
