@@ -1,4 +1,6 @@
 using Favohit.WebApi.Data;
+using Favohit.WebApi.Repository;
+using Favohit.WebApi.Repository.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +27,11 @@ namespace Favohit.WebApi
             {
                 options.UseSqlServer(this.Configuration.GetConnectionString("FavohitConnection"));
             });
+
+            services.AddScoped(typeof(BaseRepository<>));
+            services.AddScoped<UserRepository>();
+            services.AddScoped<AlbumRespository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
