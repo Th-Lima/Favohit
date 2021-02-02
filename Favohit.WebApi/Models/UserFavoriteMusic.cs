@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Favohit.WebApi.Models
 {
@@ -13,6 +14,7 @@ namespace Favohit.WebApi.Models
 
         public Music Music { get; set; }
 
+        [JsonIgnore]
         public User User { get; set; }
     }
 }
