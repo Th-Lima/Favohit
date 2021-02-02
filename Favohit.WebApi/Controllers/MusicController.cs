@@ -38,14 +38,19 @@ namespace Favohit.WebApi.Controllers
         {
             //Get album
             var album = await _repository.GetById(albumId);
+
+            if (ModelState.IsValid)
+            {
+                //Adding music in album
+                album.Musics.Add(music);
+
+                //Update album model
+                await _repository.Update(album);
+                return Ok();
+            }
+
+            return BadRequest(ModelState);
             
-            //Adding music in album
-            album.Musics.Add(music);
-
-            //Update album model
-            await _repository.Update(album);
-
-            return Ok();
         }
     }
 }

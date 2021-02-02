@@ -2,6 +2,7 @@
 using Favohit.WebApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Favohit.WebApi.Controllers
@@ -34,9 +35,23 @@ namespace Favohit.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Album album)
         {
-            await _repository.Save(album);
+            var albumDuplicated = _repository.Query.Where(x => x.Name == album.Name && x.Band == album.Band).ToList();
 
-            return Created($"/{album.Id}", album);
+            if (albumDuplicated != null && albumDuplicated.Count > 0)
+            {
+                return BadRequest(new
+                {
+                    Message = "Album já existe"
+                });
+            }
+            
+            if (ModelState.IsValid)
+            {
+                await _repository.Save(album);
+                return Created($"/{album.Id}", album);
+            }
+
+            return BadRequest(ModelState);
         }
 
         [HttpDelete("{id}")]
@@ -46,7 +61,7 @@ namespace Favohit.WebApi.Controllers
 
             await _repository.Remove(album);
 
-            return NoContent();
+            return Ok("Deletado com sucesso");
         }
     }
 }
