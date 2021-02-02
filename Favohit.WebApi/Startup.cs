@@ -1,16 +1,13 @@
+using Favohit.WebApi.Data;
+using Favohit.WebApi.Repository;
+using Favohit.WebApi.Repository.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Favohit.WebApi
 {
@@ -26,6 +23,14 @@ namespace Favohit.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<FavohitContext>(options =>
+            {
+                options.UseSqlServer(this.Configuration.GetConnectionString("FavohitConnection"));
+            });
+
+            services.AddScoped(typeof(BaseRepository<>));
+            services.AddScoped<UserRepository>();
+            services.AddScoped<AlbumRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

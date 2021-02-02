@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Favohit.WebApi.Models
+namespace Favohit.WebApi.ViewModel
 {
-    public class Music
+    public class RegisterUserViewModel
     {
-        public Guid Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public int Duration { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
-        [JsonIgnore]
-        public Album Album { get; set; }
+        [Required]
+        public string Password { get; set; }
+
     }
 }
