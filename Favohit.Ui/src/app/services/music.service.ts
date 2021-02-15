@@ -17,15 +17,15 @@ export class MusicService {
     return this.http.get<Album[]>(`${environment.baseUrl}album`);
   }
 
-  public getAlbumDetail(id): Observable<Album>{
+  public getAlbumDetail(id: string): Observable<Album>{
       return this.http.get<Album>(
           `${environment.baseUrl}album/${id}`
       );
   }
 
-  public getAllMusicsByAlbumId(albumId): Observable<Music[]>{
+  public getAllMusicsByAlbumId(id: string): Observable<Music[]>{
     return this.http.get<Music[]>(
-        `${environment.baseUrl}album/${albumId}/music`
+        `${environment.baseUrl}music/${id}`
     );
   }
 
