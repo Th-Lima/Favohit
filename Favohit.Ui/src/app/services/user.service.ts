@@ -16,7 +16,7 @@ export class UserService {
 
   public authenticate(payload: SignIn): Observable<User> {
     return this.http.post<User>(
-        `${environment.baseUrl}user/autheticate`, payload
+        `${environment.baseUrl}user/authenticate`, payload
     );
   }
 
