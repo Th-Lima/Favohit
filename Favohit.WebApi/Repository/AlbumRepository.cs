@@ -28,5 +28,12 @@ namespace Favohit.WebApi.Repository
                 .SelectMany(x => x.Musics)
                 .FirstOrDefaultAsync(x => x.Id == musicId);
         }
+
+        public async Task<Album> GetById(Guid id)
+        {
+            return await this.Query.Include(x => x.Musics)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+        }
     }
 }
