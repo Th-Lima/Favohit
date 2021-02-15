@@ -93,7 +93,7 @@ namespace Favohit.WebApi.Controllers
 
             await _userRepository.Update(user);
 
-            return Ok("Música Removida com sucesso");
+            return Ok(user);
         }
     }
 }
