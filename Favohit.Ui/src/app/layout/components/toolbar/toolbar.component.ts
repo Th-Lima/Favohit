@@ -1,3 +1,4 @@
+import { PersistenceService } from './../../../services/persistence.service';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -9,6 +10,7 @@ import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
 
 import { navigation } from "app/navigation/navigation";
 import { Router } from "@angular/router";
+import User from 'app/model/user.mode';
 
 @Component({
     selector: "toolbar",
@@ -23,18 +25,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
+    user: User;
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _fuseSidebarService: FuseSidebarService
+        private _fuseSidebarService: FuseSidebarService,
+        private _persistence: PersistenceService
     ) {
         this.navigation = navigation;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+        this.user = this._persistence.get('authenticate_user');
     }
 
     ngOnInit(): void {

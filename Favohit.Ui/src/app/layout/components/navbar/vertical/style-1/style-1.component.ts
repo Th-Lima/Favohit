@@ -1,3 +1,4 @@
+import { PersistenceService } from './../../../../../services/persistence.service';
 import {
     Component,
     OnDestroy,
@@ -13,6 +14,7 @@ import { FuseConfigService } from "@fuse/services/config.service";
 import { FuseNavigationService } from "@fuse/components/navigation/navigation.service";
 import { FusePerfectScrollbarDirective } from "@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive";
 import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
+import User from 'app/model/user.mode';
 
 @Component({
     selector: "navbar-vertical-style-1",
@@ -23,6 +25,7 @@ import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
 export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
+    user: User;
 
     private _fusePerfectScrollbar: FusePerfectScrollbarDirective;
     private _unsubscribeAll: Subject<any>;
@@ -30,9 +33,11 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
-        private _router: Router
+        private _router: Router,
+        private _persistence: PersistenceService
     ) {
         this._unsubscribeAll = new Subject();
+        this.user = this._persistence.get('authenticate_user');
     }
 
     // -----------------------------------------------------------------------------------------------------
