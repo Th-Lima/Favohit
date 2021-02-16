@@ -1,6 +1,10 @@
+import { PersistenceService } from './../../../services/persistence.service';
+import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
+import FavoriteMusic from 'app/model/favorite-music.model';
+import User from 'app/model/user.mode';
 
 @Component({
     selector: "app-favorite",
@@ -12,14 +16,37 @@ export class FavoriteComponent implements OnInit {
         "position",
         "name",
         "duration",
-        "band",
-        "avatar",
-        "album",
         "action",
     ];
-    dataSource: any[];
+    dataSource: FavoriteMusic[];
+    user: User;
 
-    constructor() {}
+    constructor(
+        private userService: UserService,
+        private persistence: PersistenceService,
+        private router: Router
+    ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.user = this.persistence.get('authenticate_user');
+        this.dataSource = this.user.favoriteMusics;
+    }
+
+    getMusicDuration(value: number): string {
+        const minutes: number = Math.floor(value / 60);
+        return `${minutes.toString().padStart(2, "0")}: ${(value - minutes * 60).toString().padStart(2, "0")}`;
+    }
+
+    removeFromFavorite(musicId): void{
+        this.userService.removeMusicToFavorite(this.user.id, musicId).subscribe(data => {
+            this.persistence.set('authenticate_user', data);
+            this.user = data;
+            this.dataSource = this.user.favoriteMusics;
+            Swal.fire(
+                'Música removida com sucesso',
+                'Música removida dos favoritos',
+                'success'
+            );
+        });
+    }
 }
