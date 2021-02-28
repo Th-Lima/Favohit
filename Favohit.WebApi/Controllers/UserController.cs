@@ -43,6 +43,12 @@ namespace Favohit.WebApi.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPost("notAuthenticate")]
+        public IActionResult SignOut()
+        {
+            return Ok();
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
