@@ -11,6 +11,7 @@ import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
 import { navigation } from "app/navigation/navigation";
 import { Router } from "@angular/router";
 import User from 'app/model/user.mode';
+import { UserService } from 'app/services/user.service';
 
 @Component({
     selector: "toolbar",
@@ -33,7 +34,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _persistence: PersistenceService
+        private _persistence: PersistenceService,
+        private router: Router,
+        private service: UserService,
     ) {
         this.navigation = navigation;
 
@@ -61,6 +64,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+    }
+
+    logout(): void{
+        this.service.notAuthenticate().subscribe(() => {
+            this._persistence.remove('authenticate_user');
+            this.router.navigate(['page/auth/login']);
+        });
     }
 
     toggleSidebarOpen(key): void {

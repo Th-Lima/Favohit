@@ -20,6 +20,12 @@ export class UserService {
     );
   }
 
+  public notAuthenticate(): Observable<User> {
+      return this.http.post<User>(
+          `${environment.baseUrl}user/notAuthenticate`, null
+      );
+  }
+
   public register(payload: Register): Observable<User>{
     return this.http.post<User>(
         `${environment.baseUrl}user/register`, payload
