@@ -16,8 +16,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore Favohit.WebApi/Favohit.WebApi.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build Favohit.WebApi/Favohit.WebApi.csproj --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test Favohit.WebApi/Favohit.WebApi.csproj --no-build --verbosity normal
